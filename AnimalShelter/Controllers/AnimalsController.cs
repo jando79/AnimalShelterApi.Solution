@@ -17,7 +17,29 @@ namespace AnimalShelter.Controllers
       _db = db;
     }
 
-    //pagination goes here
+    [HttpGet("page/{page}")]
+    public async Task<ActionResult<List<Animal>>> GetAnimals(int page)
+    {
+      if (_db.Animals == null)
+        return NotFound();
+
+      var pageResults = 2f;
+      var pageCount = Math.Ceiling(_db.Animals.Count() / pageResults);
+
+      var animals = await _db.Animals
+                      .Skip((page - 1) * (int)pageResults)
+                      .Take((int)pageResults)
+                      .ToListAsync();
+      
+      var response = new AnimalResponse
+      {
+        Animals = animals,
+        CurrentPage = page,
+        Pages = (int)pageCount
+      };
+
+      return Ok(response);
+    }
 
     [HttpGet]
     public async Task<List<Animal>> Get(string breed, string name, int age, int minimumAge, string funFact)
