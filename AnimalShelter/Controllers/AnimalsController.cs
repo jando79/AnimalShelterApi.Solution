@@ -17,6 +17,39 @@ namespace AnimalShelter.Controllers
       _db = db;
     }
 
-    
+    //pagination goes here
+
+    [HttpGet]
+    public async Task<List<Animal>> Get(string breed, string name, int age, int minimumAge, string funFact)
+    {
+      IQueryable<Animal> query = _db.Animals.AsQueryable();
+
+      if(breed != null)
+      {
+        query = query.Where(entry => entry.Breed == breed);
+      }
+
+      if(name != null)
+      {
+        query = query.Where(entry => entry.Name == name);
+      }
+
+      if(age != 0)
+      {
+        query = query.Where(entry => entry.Age == age);
+      }
+
+      if (minimumAge > 0)
+      {
+        query = query.Where(entry => entry.Age >= minimumAge);
+      }
+
+      if(funFact != null)
+      {
+        query = query.Where(entry => entry.FunFact == funFact);
+      }
+
+      return await query.ToListAsync();
+    }
   }
 }
