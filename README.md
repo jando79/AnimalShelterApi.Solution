@@ -121,3 +121,87 @@ dotnet tool install --global dotnet-ef --version 6.0.0
 8. To optionally further build out this project in development mode, start the project with `dotnet watch run` in the production directory "AnimalShelter".
 9. Use your program of choice to make API calls. In your API calls, use the domain _http://localhost:5000_. Keep reading to learn about all of the available endpoints.
 
+## Testing the API Endpoints
+
+You are welcome to test this API via [Postman](https://www.postman.com/) or [curl](https://curl.se/).
+
+### Available Endpoints
+
+```
+GET http://localhost:5000/api/animals/
+GET http://localhost:5000/api/animals/{id}
+POST http://localhost:5000/api/animals/
+PUT http://localhost:5000/api/animals/{id}
+DELETE http://localhost:5000/api/animals/{id}
+```
+
+Note: `{id}` is a variable and it should be replaced with the id number of the animal you want to GET, PUT, or DELETE.
+
+#### Optional Query String Parameters for GET Request
+
+GET requests to `http://localhost:5000/api/animals/` can optionally include query strings to filter or search animals. For example:
+
+| Parameter   | Type        |  Required    | Description |
+| ----------- | ----------- | -----------  | ----------- |
+| breed        | String      | not required | Returns animals with a matching breed value |
+| age          | Number      | not required | Returns animals with a matching age value |
+
+
+
+The following query will return all animals with the breed "Cat":
+
+```
+GET http://localhost:5000/api/animals?breed=Cat
+```
+
+You can include multiple query strings by separating them with an `&`:
+
+```
+GET http://localhost:5000/api/animals?name=steve&age=40
+```
+
+#### Additional Requirements for POST Request
+
+When making a POST request to `http://localhost:5000/api/animals/`, you need to include a **body**. Here's an example body in JSON:
+
+```json
+{
+  "breed": "Cat",
+  "name": "Steve",
+  "age": 40,
+  "funFact": "Actually human, but pretends to be a cat. Could use a nice home, psychiatrist, and medication."
+}
+```
+
+#### Additional Requirements for PUT Request
+
+When making a PUT request to `http://localhost:5000/api/animal/{id}`, you need to include a **body** that includes the animals's `animalId` property. Here's an example body in JSON:
+
+```json
+{
+  "animalId": 6,
+  "breed": "Tiger",
+  "name": "Lion",
+  "age": 1,
+  "funFacts": "Previous owner was terrible at animal identification. Gluten-free. Flys"
+}
+```
+
+And here's the PUT request we would send the previous body to:
+
+```
+http://localhost:5000/api/animal/6
+```
+
+Notice that the value of `animalId` needs to match the id number in the URL. In this example, they are both 6.
+
+## Known Bugs
+
+* No known issues.
+
+## License
+Enjoy the site!
+
+[MIT](https://github.com/git/git-scm.com/blob/main/MIT-LICENSE.txt)
+
+Copyright (c) 2023 David Jandron
