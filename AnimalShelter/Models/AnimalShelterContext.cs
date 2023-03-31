@@ -1,5 +1,3 @@
-// using System;
-// using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 namespace AnimalShelter.Models
@@ -7,7 +5,6 @@ namespace AnimalShelter.Models
   public class AnimalShelterContext : DbContext
   {
     public DbSet<Animal> Animals { get; set; }
-    // in tutorial: public DbSet<Planet>? Planets { get; set; }
 
     public AnimalShelterContext(DbContextOptions<AnimalShelterContext> options) : base(options)
     {
